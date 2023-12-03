@@ -1,0 +1,84 @@
+<div class="room-container">
+  <h2>GameRooms</h2>
+
+  <button
+    nz-button
+    nzType="primary"
+    class="create-room-button"
+    (click)="openModal()"
+  >
+    Create Room
+  </button>
+
+  <nz-table #basicTable [nzData]="rooms" *ngIf="rooms.length > 0">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Room Owner</th>
+        <th>Opponent</th>
+        <th>Size</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of basicTable.data">
+        <td>{{ item.roomId }}</td>
+        <td>{{ item.ownerUsername }}</td>
+        <td>{{ item.opponentUsername || "null" }}</td>
+        <td>{{ item.size }} x {{ item.size }}</td>
+        <td>{{ item.status }}</td>
+        <td>
+          <button
+            nz-button
+            nzType="primary"
+            [disabled]="item.opponentUsername !== null"
+            (click)="joinRoom(item.roomId)"
+          >
+            {{ item.opponentUsername === null ? "Join" : "Joined" }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <!-- Modal -->
+  <div *ngIf="showModal" class="modal">
+    <div class="modal-content">
+      <h2>Create a Room</h2>
+      <div *ngIf="hasErrors()">
+        <nz-alert
+          *ngFor="let field of errorKeys()"
+          nzShowIcon
+          nzType="error"
+          [nzMessage]="validationError[field]"
+          [ngStyle]="{ 'margin-bottom': '16px' }"
+        ></nz-alert>
+      </div>
+      <div class="input-container">
+        <label for="option">Game Size</label>
+        <nz-select
+          [(ngModel)]="selectedValue"
+          nzAllowClear
+          nzPlaceHolder="Choose"
+        >
+          <nz-option
+            *ngFor="let option of optionList"
+            [nzValue]="option"
+            [nzLabel]="option.label"
+          ></nz-option>
+        </nz-select>
+      </div>
+      <div class="cta-container">
+        <button
+          nz-button
+          type="button"
+          (click)="createRoom()"
+          [nzLoading]="loading"
+        >
+          Create
+        </button>
+        <button nz-button type="button" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

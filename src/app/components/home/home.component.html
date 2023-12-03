@@ -1,0 +1,29 @@
+<div class="home-container">
+  <div class="categories">
+    <div class="categories__header">
+      <h1 style="cursor: pointer">LeaderBoard</h1>
+      <nz-table #basicTable [nzData]="ranking" *ngIf="ranking.length > 0">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Matches</th>
+            <th>Draws</th>
+            <th>Loses</th>
+            <th>Winning percentage</th>
+            <th>Wins</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of basicTable.data">
+            <td>{{ item.fullName }}</td>
+            <td>{{ item.matches }}</td>
+            <td>{{ item.draws }}</td>
+            <td>{{ item.loses }}</td>
+            <td>{{ item.winningProcent }}%</td>
+            <td>{{ item.wins }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</div>

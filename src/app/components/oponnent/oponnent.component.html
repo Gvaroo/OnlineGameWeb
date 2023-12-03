@@ -1,0 +1,65 @@
+<div class="players">
+  <div [ngClass]="{ active: isPlayerTurn }" *ngIf="currentPlayer !== null">
+    {{ currentPlayer }}
+  </div>
+  <div [ngClass]="{ active: !isPlayerTurn }" *ngIf="opponentPlayer !== null">
+    {{ opponentPlayer }}
+  </div>
+</div>
+<div>
+  <div class="timer" *ngIf="isPlayerTurn">
+    Time left: {{ remainingTime }} seconds
+  </div>
+  <div>
+    <div *ngFor="let row of gameBoard; let i = index" class="row">
+      <div
+        *ngFor="let cell of row; let j = index"
+        class="cell"
+        (click)="makeMove(i, j)"
+      >
+        {{ cell }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div *ngIf="showModal" class="modal">
+  <div class="modal-content">
+    <h2>
+      {{
+        timeout
+          ? "Time Limit has been Reached"
+          : winner
+          ? "You Won the Match!"
+          : draw
+          ? "Game Ending as Draw"
+          : "You Lost the Match"
+      }}
+    </h2>
+    <p>
+      {{
+        timeout || draw || winner
+          ? "Do you want to rematch?"
+          : "Do you want to try again?"
+      }}
+    </p>
+    <div class="cta-container">
+      <button nz-button [nzLoading]="loading" type="button" (click)="rematch()">
+        Rematch
+      </button>
+      <button nz-button type="button" (click)="closeRoom()">Close Room</button>
+    </div>
+  </div>
+</div>
+
+<!-- Request Modal -->
+<div *ngIf="showRequestModal" class="modal">
+  <div class="modal-content">
+    <h2>{{ opponentPlayer }} requested rematch! Do you want to accept?</h2>
+    <div class="cta-container">
+      <button nz-button type="button" (click)="acceptRematch()">YES</button>
+      <button nz-button type="button" (click)="closeRoom()">NO</button>
+    </div>
+  </div>
+</div>

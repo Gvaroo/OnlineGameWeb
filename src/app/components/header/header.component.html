@@ -1,0 +1,66 @@
+<header class="header-container">
+  <div class="header-container__left">
+    <button
+      nz-button
+      nzType="text"
+      size="large"
+      (click)="toggleMenu()"
+      nzShape="circle"
+      nzSize="large"
+    >
+      <i
+        nz-icon
+        nzType="menu"
+        [ngStyle]="{ 'font-size': '1.25rem', 'padding-top': '6px' }"
+      ></i>
+    </button>
+  </div>
+  <div class="header-container__middle">
+    <h3 routerLink="/">Eccom</h3>
+  </div>
+  <div class="header-container__right"></div>
+</header>
+
+<div [className]="isMenuOpen ? 'side-menu show' : 'side-menu'">
+  <i nz-icon nzType="close" nzTheme="outline" (click)="toggleMenu()"></i>
+  <div class="side-menu__content">
+    <h2 routerLink="/" (click)="toggleMenu()">Eccom</h2>
+    <nav>
+      <ul>
+        <li routerLink="/" (click)="toggleMenu()">Home</li>
+        <li *ngIf="isLoggedIn" routerLink="/myRooms" (click)="toggleMenu()">
+          My Rooms
+        </li>
+        <li *ngIf="isLoggedIn" routerLink="/rooms" (click)="toggleMenu()">
+          Rooms
+        </li>
+      </ul>
+    </nav>
+    <div class="🍑">
+      <button
+        nz-button
+        routerLink="/login"
+        (click)="toggleMenu()"
+        *ngIf="!isLoggedIn"
+      >
+        Sign in
+      </button>
+      <button
+        nz-button
+        routerLink="/register"
+        (click)="toggleMenu()"
+        *ngIf="!isLoggedIn"
+      >
+        Sign up
+      </button>
+      <button nz-button (click)="logout(); toggleMenu()" *ngIf="isLoggedIn">
+        Sign out
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  [className]="isMenuOpen ? 'darken-background enable' : 'darken-background'"
+  (click)="toggleMenu()"
+></div>

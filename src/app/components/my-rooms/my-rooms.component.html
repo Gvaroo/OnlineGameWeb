@@ -1,0 +1,29 @@
+<div class="room-container">
+  <h2>Your joined Rooms</h2>
+  <nz-table #basicTable [nzData]="rooms" *ngIf="rooms.length > 0">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Room Owner</th>
+        <th>Opponent</th>
+        <th>Size</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of basicTable.data">
+        <td>{{ item.roomId }}</td>
+        <td>{{ item.ownerUsername }}</td>
+        <td>{{ item.opponentUsername || "null" }}</td>
+        <td>{{ item.size }} x {{ item.size }}</td>
+        <td>{{ item.status }}</td>
+        <td>
+          <button nz-button nzType="primary" (click)="joinRoom(item.roomId)">
+            Join Room
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
